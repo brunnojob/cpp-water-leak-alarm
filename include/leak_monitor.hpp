@@ -81,6 +81,7 @@ public:
   }
   void reset_fault(LeakSample s) {
     if (state_ != LeakState::SensorFault || !s.quality ||
+        (initialized_ && s.timestamp <= previous_) ||
         !std::isfinite(s.adc) || s.adc < 0 || s.adc > config_.reset)
       throw std::logic_error("valid dry sample required");
     initialized_ = false;
