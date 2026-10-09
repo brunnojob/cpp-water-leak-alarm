@@ -19,7 +19,7 @@ CSV input: `timestamp_ms,adc`. The library exposes manual acknowledgement and da
 
 ## Optional report archive
 
-Export a JSON report from the command above, then run `python cloud/sync.py enqueue result.json --project cpp-water-leak-alarm` and `python cloud/sync.py sync`. Synchronization requires `BRUNNODEV_ACCESS_TOKEN` and the external operations API; the local outbox retains unacknowledged reports.
+Use the [shared operations archive client](https://github.com/brunnojob/vercel-home-telemetry-api/tree/main/cloud) to queue `result.json` under project `cpp-water-leak-alarm`. The client uses `BRUNNODEV_ACCESS_TOKEN` and retains unacknowledged reports locally.
 
 ## License
 
