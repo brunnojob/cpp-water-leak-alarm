@@ -1,29 +1,33 @@
 # Water Leak Monitor
 
-Análise de leituras com filtro, histerese, confirmação temporal, falha de sensor e alarme retido até reconhecimento.
+Sensor reading analysis with filtering, hysteresis, temporal confirmation, sensor-failure detection, and an alarm latched until acknowledgement.
 
-## Executar
+## Run
 
-Requisitos: C++20 e CMake.
+Requirements: C++20 and CMake.
 
 ```sh
 cmake -S . -B build
 cmake --build build
 ctest --test-dir build --output-on-failure
-build/leak_monitor leituras.csv > resultado.json
+build/leak_monitor leituras.csv > result.json
 ```
 
-## Funcionamento
+## Behavior
 
-Entrada CSV: `timestamp_ms,adc`. A biblioteca expõe reconhecimento manual e validação de dados. Testes incluem alarme, recuperação, atraso e valores não finitos. A atuação física exige integração e validação do dispositivo.
+CSV input: `timestamp_ms,adc`. The library exposes manual acknowledgement and data validation. Tests cover alarms, recovery, delays, and non-finite values. Physical actuation requires device integration and validation.
 
-## Persistência de resultados
+## Result synchronization
 
-O arquivo de operações está em [vercel-home-telemetry-api.vercel.app](https://vercel-home-telemetry-api.vercel.app/laboratory.html?project=cpp-water-leak-alarm). As migrações Supabase estão no [repositório da API](https://github.com/brunnojob/vercel-home-telemetry-api/tree/main/supabase/migrations).
+The [operations archive](https://vercel-home-telemetry-api.vercel.app/laboratory.html?project=cpp-water-leak-alarm) stores execution results. Supabase migrations are in the [API repository](https://github.com/brunnojob/vercel-home-telemetry-api/tree/main/supabase/migrations).
 
 ```sh
-python cloud/sync.py enqueue resultado.json --project cpp-water-leak-alarm
+python cloud/sync.py enqueue result.json --project cpp-water-leak-alarm
 python cloud/sync.py sync
 ```
 
-Defina `BRUNNODEV_ACCESS_TOKEN` com sua sessão. A fila SQLite conserva os relatórios até confirmação do servidor; o mesmo conteúdo não gera registros duplicados. Tokens não são gravados no código.
+Set `BRUNNODEV_ACCESS_TOKEN` to your session token. The SQLite outbox retains reports until the server confirms persistence; identical content does not create duplicate records. Tokens are not stored in source code. To run the synchronization tests:
+
+```sh
+python -m unittest discover -s cloud
+```
