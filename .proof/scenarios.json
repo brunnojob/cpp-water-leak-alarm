@@ -1,0 +1,75 @@
+{
+  "repository": "brunnojob/cpp-water-leak-alarm",
+  "inputs": [
+    ".proof/scenarios.json",
+    ".proof/demo.cpp"
+  ],
+  "cases": [
+    {
+      "name": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug"
+      ],
+      "timeout": 900,
+      "display": false
+    },
+    {
+      "name": "cmake --build build --parallel 2",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "cmake --build build --parallel 2"
+      ],
+      "timeout": 900,
+      "display": false
+    },
+    {
+      "name": "ctest --test-dir build --output-on-failure",
+      "argv": [
+        "bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "-c",
+        "ctest --test-dir build --output-on-failure"
+      ],
+      "timeout": 900,
+      "display": true
+    },
+    {
+      "name": "Compile leak-monitor demonstration",
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Iinclude",
+        ".proof/demo.cpp",
+        "-o",
+        "build/proof-demo"
+      ],
+      "contains": [],
+      "timeout": 120
+    },
+    {
+      "name": "Demonstrate sustained leak and stale-sensor alarm",
+      "argv": [
+        "build/proof-demo"
+      ],
+      "contains": [
+        "\"sustained_leak_confirmed\":true",
+        "\"stale_sensor_alarm\":true"
+      ],
+      "timeout": 120
+    }
+  ]
+}
