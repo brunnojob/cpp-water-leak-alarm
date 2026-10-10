@@ -29,7 +29,7 @@ Original source and documentation are MIT licensed; see [LICENSE](LICENSE). Thir
 
 Fault resets require a timestamp newer than the last accepted reading. A delayed or replayed reading cannot clear a clock fault. Native regression checks cover stale reset rejection and valid recovery.
 
-Contribution trailer: `Co-authored-by: nyctophile <329826984+ineedfoundmyway@users.noreply.github.com>`.
+Contribution trailer: `Co-authored-by: nyctophile <33561761+ineedfoundmyway@users.noreply.github.com>`.
 
 ## Execution proof
 
