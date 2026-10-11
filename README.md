@@ -1,5 +1,7 @@
 # Water Leak Monitor
 
+[View execution evidence](https://brunnojob.github.io/devstart-lab/proofs/cpp-water-leak-alarm/)
+
 Sensor reading analysis with filtering, hysteresis, temporal confirmation, sensor-failure detection, and an alarm latched until acknowledgement.
 
 ## Run
